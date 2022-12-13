@@ -1,0 +1,4 @@
+"variable" "n" "Y/N" "percentage"
+"1" "avoid" 848 FALSE 4.10713420835957
+"2" "avoid" 8525 TRUE 41.2892914224827
+"3" "avoid" 11274 NA 54.6035743691577

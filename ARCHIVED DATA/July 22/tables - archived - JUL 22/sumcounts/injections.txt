@@ -1,0 +1,4 @@
+"variable" "n" "Y/N" "percentage"
+"1" "injections" 1525 FALSE 7.38606092894852
+"2" "injections" 436 TRUE 2.11168692788299
+"3" "injections" 18686 NA 90.5022521431685

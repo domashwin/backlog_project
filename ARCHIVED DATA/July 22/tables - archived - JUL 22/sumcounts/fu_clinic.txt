@@ -1,0 +1,19 @@
+"variable" "Type" "n" "percentage"
+"1" "fu_clinic" "adolescent" 292 1.41424904344457
+"2" "fu_clinic" "ankspond" 589 2.8527146800988
+"3" "fu_clinic" "biologic" 2518 12.1954763403884
+"4" "fu_clinic" "ctd" 802 3.88434155083063
+"5" "fu_clinic" "eia" 1778 8.61142054535768
+"6" "fu_clinic" "flare" 230 1.11396328764469
+"7" "fu_clinic" "form" 3 0.0145299559258004
+"8" "fu_clinic" "gca" 656 3.17721702910835
+"9" "fu_clinic" "genrheum" 4416 21.3880951227781
+"10" "fu_clinic" "met_bone" 1592 7.71056327795806
+"11" "fu_clinic" "msk" 526 2.547585605657
+"12" "fu_clinic" "nurse" 658 3.18690366639221
+"13" "fu_clinic" "ortho_rheum" 56 0.271225843948273
+"14" "fu_clinic" "oxsport" 1150 5.56981643822347
+"15" "fu_clinic" "psa" 587 2.84302804281494
+"16" "fu_clinic" "vasculitis" 696 3.37094977478568
+"17" "fu_clinic" "xlh" 50 0.242165932096673
+"18" "fu_clinic" NA 4048 19.6057538625466

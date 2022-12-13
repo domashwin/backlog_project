@@ -1,0 +1,7 @@
+"variable" "n" "Factor" "percentage"
+"1" "fu_group" 1154 "<1 month" 5.5891897127912
+"2" "fu_group" 4209 "1-3 months" 20.3855281638979
+"3" "fu_group" 6344 "3-6 months" 30.7260134644258
+"4" "fu_group" 4156 "6-12 months" 20.1288322758754
+"5" "fu_group" 544 ">12 months" 2.6347653412118
+"6" "fu_group" 4240 NA 20.5356710417978
