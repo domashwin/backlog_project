@@ -1,0 +1,10 @@
+"variable" "Type" "n" "percentage"
+"1" "encounter_type" "dna" 400 1.93732745677338
+"2" "encounter_type" "fu" 13802 66.8474838959655
+"3" "encounter_type" "injection" 1 0.00484331864193345
+"4" "encounter_type" "new" 5007 24.2504964401608
+"5" "encounter_type" "rdu" 1 0.00484331864193345
+"6" "encounter_type" "reref" 163 0.789460938635153
+"7" "encounter_type" "shockwave" 3 0.0145299559258004
+"8" "encounter_type" "telephone" 3 0.0145299559258004
+"9" "encounter_type" NA 1267 6.13648471932968

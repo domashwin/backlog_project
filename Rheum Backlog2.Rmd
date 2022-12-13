@@ -1,0 +1,339 @@
+---
+title: "Rheumatology Backlog Project"
+output:
+  html_document: 
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    toc_depth: 2
+    number_sections: false
+  runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(knitr)
+library(rstatix)
+library(gtsummary)
+library(labelled)
+```
+
+## Auditing the Size of the Backlog {.tabset}
+
+We have now completed three montly audit cycles of the Rheumatology outpatients backlog as well as a further interval at 6 months on.
+
+The patients are classifed as being on the backlog based on their "status date" (or date of last encounter) on the OUH *Revenue Cycle* system's list of the patients "waiting for follow up appointments". The backlock begind in March 2020 and extends to the present day; However for this project we have chosen a specific period of May 2020 to May 2021 to focus on.
+
+The audit of the backlog was performed on the 17th September (*C1*), 17th October 2021 (*C2*) and 17th November 2021 (*C3*). The final time point is on 4th March 2022 (*C4*) - showing how the backlog has continued to decline since the beginning of this project.
+
+### Raw Data
+
+This is the raw data for the number of patients per month of the backlog at these time points. The data abbreviated to just include the number of patients with a status date between in the 13 month May 2020 - May 2021 period of interest.
+
+```{r audit data, echo = FALSE, warning=FALSE}
+
+#Data Import ----
+dat <- read.csv("data/data_raw.csv") %>% filter(!is.na(month))
+dat <- dat %>% mutate(date = make_date(year,month))
+
+##Constructing required tables ----
+audit <- dat %>% 
+  pivot_wider(
+    names_from = "cycle", 
+    names_prefix = "C", 
+    values_from = patients )
+
+#table wtih the delta
+audit <- audit %>% mutate(delta = C2 - C1)
+
+#filter for period of interest
+audit20 <- audit %>% filter(between(date,as_date("2020-05-01"), as_date("2021-05-01")))
+
+#longer version for period of interest
+dat20 <- audit20 %>% pivot_longer(cols = 'C1':'C4',
+                                  names_to = "cycle",
+                                  names_prefix = "C", 
+                                  values_to = "patients")   
+
+
+#creating a seperate table used in the statistical analysis
+auditstats <- dat %>% select(patients, cycle)
+
+#preview of the audit20 table for the markdown document cleaned up
+audit20prev <- audit20 %>% select(mon, year, C1, C2, C3, C4)
+
+kable(audit20prev)
+```
+
+### Graphs
+
+#### Visualising the Backlog
+
+We can visually represent the number of patients left on the backlog in each month of the period using a ridge-line plot, which also shows how this has reduced over each cycle of the audit:
+
+**RIDGE PLOT**
+
+```{r Ridge Plot, echo=FALSE}
+
+###ridge plot====
+
+dat20ridge <- ggplot(dat20, aes(x = date, y = patients, fill = cycle)) +
+  geom_area() + 
+  labs(x = "Month", y = "Patients", fill = "Audit Cycle") + 
+  scale_fill_brewer(labels = c("1 (Sep 21)", "2 (Oct 21)", "3 (Nov 21)", "4 (Mar 22)"), type = "qual", palette = "Set2") +
+  theme_minimal()
+
+dat20ridge
+```
+
+**COLUMN CHART**
+
+```{r Column Graph, echo=FALSE, warning=FALSE}
+###bar chart====
+
+dat20col<- ggplot(dat20, aes(x = date, y = patients)) +   #column chart with offset for each month
+  geom_col(aes(fill = cycle), position = "dodge") +
+  labs(x = "Month", y = "Patients", fill = "Audit Cycle") +
+  scale_fill_brewer(labels = c("1 (Sep 21)", "2 (Oct 21)", "3 (Nov 21)", "4 (Mar 22)"), type = "qual", palette = "Set2") +
+  scale_x_date(limits = as.Date(c('2020-04-01', '2021-05-14')), date_breaks = "months" , date_labels = "%b-%y") +
+  theme_minimal()
+
+dat20col
+
+```
+
+##  {.unnumbered}
+
+## Statistical Analysis {.tabset}
+
+We can explore whether the change in the number of patients on the backlog during this period is statistically significant in a couple of different ways.
+
+### Distribution
+
+#### Comparing the distribution of patients across months
+
+Firstly a **Wilcoxon Sign Rank** test (for multiple groups of non-parametric data) on the dataset, comparing the number of patients in each month in each cycle of the audit:
+
+Firstly an *unpaired test*:
+
+```{r unpaired wilcoxon rank, echo =FALSE, warning=FALSE}
+
+wilres <- wilcox_test(auditstats, patients ~ cycle)
+kable(wilres)
+```
+
+And a paired test:
+
+```{r paired wilcoxon rank, echo =FALSE, warning=FALSE}
+wilpaires <- pairwise_wilcox_test(auditstats, patients ~ cycle)
+kable(wilpaires)
+
+```
+
+This shows that there is no statistically significant difference between the medians and distribution of patients between months in the May 20 - May 21 period when the number of patients in each month is listed seperately.
+
+We can infer from this that the *shape* of the backlog does not change - i.e. there are always more people on it more recently than at the dates furthest back in time.
+
+### Total Number
+
+#### Comparing the total number of patients
+
+An alternative method is to compare the *total* number of patients on the backlog at the time of each of the three cycles; this is an effective comparison of the "area under the curve" at each of these time points ("C1", "C2" and "C3").
+
+```{r chi square totals, echo=FALSE, warning=FALSE}
+#calculate the totals for each cycle
+chistats <- dat20 %>% pivot_wider(names_from = "cycle", names_prefix = "C", values_from = patients) 
+chistotals <- chistats %>% select (C1:C4)  %>% summarise(C1 = sum(C1), C2 = sum(C2), C3 = sum(C3), C4 = sum(C4))
+
+kable(chistotals)
+```
+
+This can be performed with a **Chi-squared** test:
+
+Unpaired test:
+
+```{r unpaired chi, echo=FALSE, warning=FALSE}
+
+#unpaired test
+chires_totals <- chisq_test(chistotals)
+kable(chires_totals)
+kable(chisq_descriptives(chires_totals))
+```
+
+Pairwise comparison:
+
+```{r pairwise chi, echo=FALSE, warning=FALSE}
+#pairwise test
+chipaires <- pairwise_chisq_gof_test(chistotals)
+kable(chipaires)
+```
+
+Therefore there is a statistically significant difference between the number of the patients on the backlog during this period at each of the three time points.
+
+### Trend
+
+#### Testing for Trend
+
+Additionally we can calculate the **Cochran-Armitage test** (a Chi-squared test for linear trends in changing proportions) with the assumption of the same proportion of patients in each month in each cycle:
+
+First construct a table:
+
+```{r cochran table, echo = FALSE}
+
+#creating a better summary table using unite to create a 'monyear' column
+ datsummary <- chistats %>% unite(monyear, mon, year, sep = " ", remove = TRUE) %>% mutate(audit_month = row_number()) %>% select(!month)
+ 
+ datsummary <- set_variable_labels(datsummary, monyear = "Month")
+ 
+trendaudit <- rbind(c(datsummary$C1), c(datsummary$C2), c(datsummary$C3), c(datsummary$C4))
+
+dimnames(trendaudit) <- list(
+  cycle = c("C1", "C2", "C3", "C4"),
+  month = c(datsummary$monyear))
+
+trendaudit <- t(trendaudit)
+kable(trendaudit)
+```
+
+Then we perform the test:
+
+```{r cochran test, echo=FALSE}
+
+trendres <- trendaudit %>% prop_trend_test( score = c(1:13))
+kable(trendres)
+```
+
+This shows a highly statistically significant possible linear association between cycle and patients in each month
+
+##  {.unnumbered}
+
+## Remote Management Data
+
+Remote management forms collected data from patients who were on the backlog. They took the form of triage questionairres and including the relevant questions to calculate disease severity scores; as well as asking about medications, side effects and other disease factors.
+
+There were seperate remote managemnt forms created for each of the following diagnostic groups:
+
+-   Ankylosing Spondylitis/BASDAI scoring
+
+-   SLE
+
+-   Rheumatoid Arthritis
+
+-   Vasculitis
+
+-   Psoriatic Arthritis
+
+The data collected from these forms is summarised below, with a particular focus on how patients from the backlog were dealt with.
+
+```{r remote management data, include = FALSE, echo = FALSE, warning = FALSE}
+
+#Workspace
+library(tidyverse)
+library(lubridate)
+library(gridExtra)
+library(patchwork)
+library(kableExtra)
+
+#data import
+rmd <- read_csv("data/remote_management_data.csv")
+rmd$visit <- parse_date(rmd$visit,  "%d/%m/%Y")
+rmd$prev_appt <- parse_date(rmd$prev_appt, "%d/%m/%Y")
+
+#making the vasculitis type key
+vasctype <- tibble(code = c(1,2,3,4), type = c("small", "medium", "large", "other"))
+#making the clinic types
+
+```
+
+The total number of forms is:
+
+```{r backlog tables, echo = FALSE, warning = FALSE}
+###number of forms per clinic type ====
+byclinic <- rmd %>% group_by(clinic) %>% summarise(count = n())
+#Preliminary exploration ====
+##number of remote management forms: ====
+kable(count(rmd)) #1306
+```
+
+The number of forms which are "incomplete" with respct to our analysis is the number for which the patient's previous appointment date is not known. This number is:
+
+```{r echo = FALSE}
+##incomplete data: ====
+no_prev_appt <- rmd %>% filter(is.na(prev_appt)) %>% count() #746
+kable(no_prev_appt)
+
+```
+
+This represents more than half the data
+
+### Further analysis {.tabset}
+
+#### Per Diagnosis
+
+The number of forms reviewed per diagnostic group - total
+
+```{r echo = FALSE, warning = FALSE}
+tab3 <- byclinic %>% 
+  transmute("Diagnosis" = clinic, "Patients reviewed (total)" = count) %>% 
+  kbl() %>% kable_styling()
+tab3
+
+```
+
+#### Time on Backlog
+
+```{r quarterly data, echo = FALSE, warning = FALSE}
+dates <- rmd %>% filter(!is.na(prev_appt))
+
+#dividing up into quarters starting in Nov 2020 when the data starts
+dates <- dates %>% mutate(visit_month = floor_date(visit, "month"))
+dates <- dates %>% mutate(quarter = quarter(visit_month, type = "year.quarter", fiscal_start = 11))
+
+#adding a months interval of time on backlog
+dates$interval <- interval(dates$prev_appt, dates$visit) %/% months(1)
+
+#number seen per quarter:
+byquarter <- dates %>% group_by(quarter)
+
+#remove incorrect data for which there war an apparent negative date interval in months (n = 7)
+dates <- dates %>% filter(interval >= 0)
+
+#displaying numbers seen and waits per quarted
+quarter_fu <- dates %>% group_by(quarter) %>% summarise(reviewed = n(), min_wait = min(interval), max_wait = max(interval), median_wait = median(interval))
+
+#numbers seen and waits per clinic
+clinic_fu <- dates %>% group_by(clinic) %>% summarise(reviewed = n(), min_wait = min(interval), max_wait = max(interval), median_wait = median(interval))
+
+#grouping how many have waited for how long
+fu3 <- dates %>%subset(interval<3) %>% summarise("<3 months" = n())
+fu6 <- dates %>% subset(interval>=3 & interval <6) %>% summarise("3-6 months" = n())
+fu12 <- dates %>% subset(interval>=6) %>% summarise(">6 months" = n())
+  #554 in total with a follow up interval
+
+
+fu_duration <- tibble("Time on Backlog" = c("<3 months", "3-6 months", ">6 months"), "Patients" = as.double(c(fu3,fu6,fu12)))
+
+tab2 <- fu_duration  #follow up duration number of patients
+tab2 <- tab2 %>%  kbl() %>% kable_styling()
+tab2
+
+```
+
+#### Quarterly Data
+
+We were able to further analyse how patients were being cleared from the backlog by the remote management forms by analysing data in quarters (i.e. grouping patients by the three month window in which their remote management data was reviewed)
+
+```{r echo = FALSE}
+tab1 <- quarter_fu %>% select(!min_wait) %>% 
+  transmute("3 month quarter (from Nov 20)" = quarter, 
+            "No. patients reviewed" = reviewed,
+            "Max time on backlog (months)" = max_wait,
+            "Median time on backlog (months)" = median_wait)
+tab1 %>% kbl() %>% kable_styling() %>%row_spec(0, align = "c")
+
+
+```
+
+###  {.unnumbered}

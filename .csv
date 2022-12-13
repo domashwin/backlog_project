@@ -1,0 +1,4 @@
+column,<chr>,n,<fct>,<yearmon>,<lgl>
+ultrasound,NA,1049,NA,NA,FALSE
+ultrasound,NA,942,NA,NA,TRUE
+ultrasound,NA,18656,NA,NA,NA

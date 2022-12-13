@@ -1,0 +1,13 @@
+name: rheum_backlog
+title:
+username:
+account: domashwin
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4891544
+bundleId: 5297900
+url: https://domashwin.shinyapps.io/rheum_backlog/
+when: 1637968912.0814
+lastSyncTime: 1637968912.08141
+asMultiple: FALSE
+asStatic: FALSE
