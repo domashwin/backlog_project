@@ -2,12 +2,12 @@
 .Rhistory
 .RData
 .Ruserdata
-ARCHIVED DATA
-data
-Data Collection
-markdown
-RheumBacklog
-Abstracts
-rsconnect
-docs
-test.R
+.DS_Store
+/ARCHIVED DATA
+/data
+/Data Collection
+/markdown
+/RheumBacklog
+/Abstracts
+/reports
+/rsconnect
