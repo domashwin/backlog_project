@@ -9,7 +9,7 @@ output:
     toc: true
     toc_float: true
     toc_collapsed: true
-    toc_depth: 2
+    toc_depth: 3
     number_sections: false
 ---
 
@@ -35,6 +35,7 @@ library(data.table)
 library(formattable)
 library(janitor)
 library(extrafont)
+library(kSamples)
 ```
 
 ## Background and Aims
@@ -111,6 +112,13 @@ sepaud <- september_22_backlog_audit
 # forms
 forms <- read_csv("/Users/dominikkurzeja/Docs/07. Medicine/Clinical Work/IMT OUH/Rheum QIPs/Backlog QIP/data/forms_backlog.csv")
 
+# wrangling 
+# pivot longer to make a stats table
+sepaud_stats <- sepaud %>% pivot_longer(cols = 'C1':'C5',
+                         names_to = "cycle",
+                         names_prefix = "C", 
+                         values_to = "patients")  %>%  select(patients, cycle)
+
 
 ```
 
@@ -183,31 +191,6 @@ Between 2-8% of the total backlog patients weremanaged using RMFs based on avail
 
 We can explore whether the change in the number of patients on the backlog during this period is statistically significant in a couple of different ways.
 
-#### Distribution
-
-##### Comparing the distribution of patients across months
-
-Firstly a **Wilcoxon Sign Rank** test (for multiple groups of non-parametric data) on the dataset, comparing the number of patients in each month in each cycle of the audit:
-
-Firstly an *unpaired test*:
-
-```{r unpaired wilcoxon rank, echo =FALSE, warning=FALSE}
-# 
-# wilres <- wilcox_test(auditstats, patients ~ cycle)
-# kable(wilres)
-```
-
-And a paired test:
-
-```{# {r paired wilcoxon rank, echo =FALSE, warning=FALSE}
-# wilpaires <- pairwise_wilcox_test(auditstats, patients ~ cycle)
-# kable(wilpaires)
-
-```
-
-This shows that there is no statistically significant difference between the medians and distribution of patients between months in the May 20 - May 21 period when the number of patients in each month is listed seperately.
-
-We can infer from this that the *shape* of the backlog does not change - i.e. there are always more people on it more recently than at the dates furthest back in time.
 
 #### Size
 
@@ -245,6 +228,23 @@ Pairwise comparison:
 
 Therefore there is a statistically significant difference between the number of the patients on the backlog during this period at each of the three time points.
 
+
+#### Distribution
+
+##### Comparing the distribution of patients across months
+
+Firstly a **Anderson-Darling k-sample test** (for multiple groups of non-parametric data) on the datasets, comparing the distributions of the patients in each cycle of the audit
+
+
+```{r anderson-douglas, echo =FALSE, warning=FALSE}
+ad.test(sepaud_stats$patients ~ sepaud_stats$cycle, method = "exact", dist = FALSE, Nsim = 1000)
+```
+
+
+This shows that there is no statistically significant difference between the distribution of the number of patients backlog for the months in the May 20 - May 21 period. 
+
+We can infer from this that the *shape* of the backlog does not change - i.e. there are always more people on it more recently than at the dates furthest back in time.
+
 #### Trend
 
 ##### Testing for Trend
@@ -280,7 +280,8 @@ Then we perform the test:
 
 This shows a highly statistically significant possible linear association between cycle and patients in each month
 
-##  {.unnumbered}
+###  {.unnumbered}
+
 
 ### Remote Management Data
 
@@ -402,7 +403,7 @@ We were able to further analyse how patients were being cleared from the backlog
 
 ```
 
-###  {.unnumbered}
+####  {.unnumbered}
 
 
 ## Conclusions + Discussion

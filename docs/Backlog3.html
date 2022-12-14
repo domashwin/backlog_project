@@ -1780,97 +1780,105 @@ RMFs based on available data (Table. 1.).</p>
 <p>We can explore whether the change in the number of patients on the
 backlog during this period is statistically significant in a couple of
 different ways.</p>
+<div id="size" class="section level4">
+<h4>Size</h4>
+<div id="comparing-the-total-number-of-patients" class="section level5">
+<h5>Comparing the total number of patients</h5>
+<p>An alternative method is to compare the <em>total</em> number of
+patients on the backlog at the time of each of the three cycles; this is
+an effective comparison of the “area under the curve” at each of these
+time points (“C1”, “C2” and “C3”).</p>
+<p>This can be performed with a <strong>Chi-squared</strong> test:</p>
+<p>Unpaired test:</p>
+<p>Pairwise comparison:</p>
+<p>Therefore there is a statistically significant difference between the
+number of the patients on the backlog during this period at each of the
+three time points.</p>
+</div>
+</div>
 <div id="distribution" class="section level4">
 <h4>Distribution</h4>
 <div id="comparing-the-distribution-of-patients-across-months" class="section level5">
 <h5>Comparing the distribution of patients across months</h5>
-<p>Firstly a <strong>Wilcoxon Sign Rank</strong> test (for multiple
-groups of non-parametric data) on the dataset, comparing the number of
-patients in each month in each cycle of the audit:</p>
-<p>Firstly an <em>unpaired test</em>:</p>
-<p>And a paired test:</p>
-<p>```{# {r paired wilcoxon rank, echo =FALSE, warning=FALSE} #
-wilpaires &lt;- pairwise_wilcox_test(auditstats, patients ~ cycle) #
-kable(wilpaires)</p>
-<pre><code>
-This shows that there is no statistically significant difference between the medians and distribution of patients between months in the May 20 - May 21 period when the number of patients in each month is listed seperately.
-
-We can infer from this that the *shape* of the backlog does not change - i.e. there are always more people on it more recently than at the dates furthest back in time.
-
-#### Size
-
-##### Comparing the total number of patients
-
-An alternative method is to compare the *total* number of patients on the backlog at the time of each of the three cycles; this is an effective comparison of the &quot;area under the curve&quot; at each of these time points (&quot;C1&quot;, &quot;C2&quot; and &quot;C3&quot;).
-
-
-
-This can be performed with a **Chi-squared** test:
-
-Unpaired test:
-
-
-
-Pairwise comparison:
-
-
-
-Therefore there is a statistically significant difference between the number of the patients on the backlog during this period at each of the three time points.
-
-#### Trend
-
-##### Testing for Trend
-
-Additionally we can calculate the **Cochran-Armitage test** (a Chi-squared test for linear trends in changing proportions) with the assumption of the same proportion of patients in each month in each cycle:
-
-First construct a table:
-
-
-
-Then we perform the test:
-
-
-
-This shows a highly statistically significant possible linear association between cycle and patients in each month
-
-##  {.unnumbered}
-
-### Remote Management Data
-
-Remote management forms collected data from patients who were on the backlog. They took the form of triage questionairres and including the relevant questions to calculate disease severity scores; as well as asking about medications, side effects and other disease factors.
-
-There were seperate remote managemnt forms created for each of the following diagnostic groups:
-
--   Ankylosing Spondylitis/BASDAI scoring
-
--   SLE
-
--   Rheumatoid Arthritis
-
--   Vasculitis
-
--   Psoriatic Arthritis
-
-The data collected from these forms is summarised below, with a particular focus on how patients from the backlog were dealt with.
-
-```{# {r remote management data, include = FALSE, echo = FALSE, warning = FALSE}
-# 
-# #data import
-# rmd &lt;- read_csv(&quot;data/remote_management_data.csv&quot;)
-# rmd$visit &lt;- parse_date(rmd$visit,  &quot;%d/%m/%Y&quot;)
-# rmd$prev_appt &lt;- parse_date(rmd$prev_appt, &quot;%d/%m/%Y&quot;)
-# 
-# #making the vasculitis type key
-# vasctype &lt;- tibble(code = c(1,2,3,4), type = c(&quot;small&quot;, &quot;medium&quot;, &quot;large&quot;, &quot;other&quot;))
-# #making the clinic types
-</code></pre>
+<p>Firstly a <strong>Anderson-Darling k-sample test</strong> (for
+multiple groups of non-parametric data) on the datasets, comparing the
+distributions of the patients in each cycle of the audit</p>
+<pre><code>## 
+## 
+##  Anderson-Darling k-sample test.
+## 
+## Number of samples:  5
+## Sample sizes:  13, 13, 13, 13, 13
+## Number of ties: 4
+## 
+## Mean of  Anderson-Darling  Criterion: 4
+## Standard deviation of  Anderson-Darling  Criterion: 1.44427
+## 
+## T.AD = ( Anderson-Darling  Criterion - mean)/sigma
+## 
+## Null Hypothesis: All samples come from a common population.
+## 
+## Based on Nsim = 1000 simulations
+## 
+##               AD  T.AD  asympt. P-value  sim. P-value
+## version 1: 15.47 7.939        1.165e-05             0
+## version 2: 15.60 8.021        1.027e-05             0</code></pre>
+<p>This shows that there is no statistically significant difference
+between the distribution of the number of patients backlog for the
+months in the May 20 - May 21 period.</p>
+<p>We can infer from this that the <em>shape</em> of the backlog does
+not change - i.e. there are always more people on it more recently than
+at the dates furthest back in time.</p>
+</div>
+</div>
+<div id="trend" class="section level4">
+<h4>Trend</h4>
+<div id="testing-for-trend" class="section level5">
+<h5>Testing for Trend</h5>
+<p>Additionally we can calculate the <strong>Cochran-Armitage
+test</strong> (a Chi-squared test for linear trends in changing
+proportions) with the assumption of the same proportion of patients in
+each month in each cycle:</p>
+<p>First construct a table:</p>
+<p>Then we perform the test:</p>
+<p>This shows a highly statistically significant possible linear
+association between cycle and patients in each month</p>
+</div>
+</div>
+</div>
+<div id="section-1" class="section level3 unnumbered">
+<h3 class="unnumbered"></h3>
+</div>
+<div id="remote-management-data" class="section level3">
+<h3>Remote Management Data</h3>
+<p>Remote management forms collected data from patients who were on the
+backlog. They took the form of triage questionairres and including the
+relevant questions to calculate disease severity scores; as well as
+asking about medications, side effects and other disease factors.</p>
+<p>There were seperate remote managemnt forms created for each of the
+following diagnostic groups:</p>
+<ul>
+<li><p>Ankylosing Spondylitis/BASDAI scoring</p></li>
+<li><p>SLE</p></li>
+<li><p>Rheumatoid Arthritis</p></li>
+<li><p>Vasculitis</p></li>
+<li><p>Psoriatic Arthritis</p></li>
+</ul>
+<p>The data collected from these forms is summarised below, with a
+particular focus on how patients from the backlog were dealt with.</p>
+<p>```{# {r remote management data, include = FALSE, echo = FALSE,
+warning = FALSE} # # #data import # rmd &lt;-
+read_csv(“data/remote_management_data.csv”) # rmd<span class="math inline">\(visit &lt;- parse_date(rmd\)</span>visit,
+“%d/%m/%Y”) # rmd<span class="math inline">\(prev_appt &lt;-
+parse_date(rmd\)</span>prev_appt, “%d/%m/%Y”) # # #making the vasculitis
+type key # vasctype &lt;- tibble(code = c(1,2,3,4), type = c(“small”,
+“medium”, “large”, “other”)) # #making the clinic types</p>
+<p>```</p>
 <p>The total number of forms is:</p>
 <p>The number of forms which are “incomplete” with respct to our
 analysis is the number for which the patient’s previous appointment date
 is not known. This number is:</p>
 <p>This represents more than half the data</p>
-</div>
-</div>
 </div>
 <div id="further-analysis" class="section level3 tabset">
 <h3 class="tabset">Further analysis</h3>
@@ -1888,9 +1896,9 @@ the backlog by the remote management forms by analysing data in quarters
 (i.e. grouping patients by the three month window in which their remote
 management data was reviewed)</p>
 </div>
+<div id="section-2" class="section level4 unnumbered">
+<h4 class="unnumbered"></h4>
 </div>
-<div id="section-1" class="section level3 unnumbered">
-<h3 class="unnumbered"></h3>
 </div>
 </div>
 <div id="conclusions-discussion" class="section level2">
@@ -1970,7 +1978,7 @@ $(document).ready(function ()  {
 
     // establish options
     var options = {
-      selectors: "h1,h2",
+      selectors: "h1,h2,h3",
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {

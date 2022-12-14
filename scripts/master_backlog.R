@@ -21,6 +21,7 @@ library(data.table)
 library(formattable)
 library(janitor)
 library(extrafont)
+library(kSamples)
 
 ## Data Import ----
 
@@ -82,7 +83,25 @@ ggsave("figures/september22/alt_backlog_cols_sep22.png", p2)
 
 ### Backlog - Statistics ----
 
+# pivot longer to make a stats table
+sepaud_stats <- sepaud %>% pivot_longer(cols = 'C1':'C5',
+                         names_to = "cycle",
+                         names_prefix = "C", 
+                         values_to = "patients")  %>%  select(patients, cycle)
 
+#### Size ----
+
+
+#### Distribution -----
+
+# we see there is a positive skew in the sample with more patients waiting closed to May 21 than May 20.
+# As the backlog size reduces it appears to be the same shape - this tests this:
+# non-parametric k-sample Anderson-Darling test. The null hypothesis is that all k samples came from the same distribution which does not need to be specified. Maybe you can use this.
+
+# AD test for same distribution
+
+ad.test(sepaud_stats$patients ~ sepaud_stats$cycle, method = "exact", dist = FALSE, Nsim = 1000)
+# NULL - i.e. all from same distribution
 
 
 ## Forms - Graphs -----
