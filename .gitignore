@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 *.DS_Store
-*.gitignore
+.gitignore
 ARCHIVED DATA/
 data/
 Data Collection/
