@@ -3,11 +3,11 @@
 .RData
 .Ruserdata
 .DS_Store
-/ARCHIVED DATA
-/data
-/Data Collection
-/markdown
-/RheumBacklog
-/Abstracts
-/reports
-/rsconnect
+ARCHIVED DATA/
+data/
+Data Collection/
+markdown/
+RheumBacklog/
+Abstracts/
+reports/
+rsconnect/
