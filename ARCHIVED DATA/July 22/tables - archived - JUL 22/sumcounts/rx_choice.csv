@@ -1,6 +1,0 @@
-variable,Type,n,percentage
-rx_choice,biologic,14,0.06780646098706834
-rx_choice,dmard,148,0.716811159006151
-rx_choice,dmard + biol,2,0.009686637283866905
-rx_choice,NO,1207,5.845885600813677
-rx_choice,NA,19276,93.35981014190924

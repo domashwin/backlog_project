@@ -1,4 +1,0 @@
-"variable" "n" "Y/N" "percentage"
-"1" "procedures" 6044 FALSE 29.2730178718458
-"2" "procedures" 2007 TRUE 9.72054051436044
-"3" "procedures" 12596 NA 61.0064416137938

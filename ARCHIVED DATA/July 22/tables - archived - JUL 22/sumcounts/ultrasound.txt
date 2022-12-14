@@ -1,4 +1,0 @@
-"variable" "n" "Y/N" "percentage"
-"1" "ultrasound" 1049 FALSE 5.08064125538819
-"2" "ultrasound" 942 TRUE 4.56240616070131
-"3" "ultrasound" 18656 NA 90.3569525839105
