@@ -35,13 +35,8 @@ f %>% group_by(`Audit Cycle`)
 
 
 
-
-
-
-
 install.packages("extrafont");library(extrafont)
 font_import("Helvetica")
-
 
 
 ggbarplot(df2, "dose", "len",
