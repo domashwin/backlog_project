@@ -1,6 +1,0 @@
-"variable" "Type" "n" "percentage"
-"1" "rx_choice" "biologic" 14 0.0678064609870683
-"2" "rx_choice" "dmard" 148 0.716811159006151
-"3" "rx_choice" "dmard + biol" 2 0.00968663728386691
-"4" "rx_choice" "NO" 1207 5.84588560081368
-"5" "rx_choice" NA 19276 93.3598101419092

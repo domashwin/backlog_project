@@ -1,4 +1,0 @@
-"variable" "n" "Y/N" "percentage"
-"1" "rx_start" 10314 FALSE 49.9539884729016
-"2" "rx_start" 698 TRUE 3.38063641206955
-"3" "rx_start" 9635 NA 46.6653751150288

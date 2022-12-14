@@ -1,5 +1,0 @@
-"variable" "Type" "n" "percentage"
-"1" "cons_type" "f2f" 8016 38.8240422337386
-"2" "cons_type" "telemed" 10046 48.6559790768635
-"3" "cons_type" "video" 921 4.46069646922071
-"4" "cons_type" NA 1664 8.05928222017726
