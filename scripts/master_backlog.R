@@ -45,7 +45,7 @@ sepaud %>% rename("Date of last encounter" = "yearmon") %>% kable()
 ### Backlog - Graphs ----
 
 # making the yearmon a true "year mon" class
-sepaud2 <-  sepaud
+sepaud2 <-  sepaud 
 sepaud2$yearmon <-  sepaud2$yearmon %>% as.yearmon("%b-%y")
 
 # longer format to permit graph

@@ -66,7 +66,6 @@ As part of the aims of this project
 
 2.  **Secondary:** To understand the nature of the consultations that have contributed to dealing with patients on the backlog, using data from remote management databases and clinic appointment outcome forms -- including types of consultations, diagnoses and follow up/management outcomes, where possible
 
-### 
 
 ## Methods {.tabset .tabset-fade .tabset-pills}
 
@@ -163,91 +162,72 @@ sep_plot
 
 ```
 
-### Statistical Analysis {.tabset}
+### Analyzing the Backlog 
 
-a.	There was no statistically significant change in the median number and distribution of patients across the 12 month period between audit cycles (Wilcoxon Sign Rank test  - results not included here), implying the "shape" of the backlog remains the same.
+#### Key Points {.tabset .tabset-fade .tabset-pills}
 
-b.	There was a statistically significant change in the total number of patients on the backlog (Chi-square test, p-value = 5.89e-274 ), with a statistically significant decrease between each of the four audit cycles (results not included here)
+We demonstrate a 90% reduction (3259 -> 326) in the total number of patients waiting for follow up on the backlog over a one year period of observation. 
 
-c.	A Chi-square test for trend (with the assumption of the same proportion of patients in each month of the backlog at each time point -- as supported by our analysis of backlog "shape" (see a., above)), supported a statistically significant, linear decrease in the number of patients in each month of the backlog period across all four cycles of the audit process (p-value = 3e-07).
+There was a statistically significant reduction in the total number of patients on the backlog with a statistically significant decrease between each of the four audit cycles. 71% of this reduction was achieved in 6 months (by March 2022). 
 
-We demonstrate a 90% reduction in patients
-awaiting follow-up 3259 to 326 over 12 months.
-71% reduction achieved by 6 months (Fig. 2)
+This reduction was statistically significant and linearly progressive between audit cycles.
 
-This reduction was statistically significant andprogressive (p\<0.001 -Chi-square test for trend).
-Remote Management Forms
+There was no statistically significant change in the number and distribution of patients across the 12 month period between audit cycles, implying the "shape" of the backlog remains the same. 
 
-•
-1956 RMFs were completed between Sep-21 -Mar-22
-(no data available since then)
-•
-Only 261 patients recorded a previous appointmentdate.
-•
-154/261 (59%) were completed by patients in the"window" of May-20 -May-21, indicating a preferentialuse of RMFs targeting backlog patients.
-•
-Between 2-8% of the total backlog patients weremanaged using RMFs based on available data (Table.
-1.).
+(p\<0.001 -Chi-square test for trend).
+(Chi-square test, p-value = 5.89e-274 ), 
 
-We can explore whether the change in the number of patients on the backlog during this period is statistically significant in a couple of different ways.
+See the tabs below for more detailed analysis.
 
+##### Size 
 
-#### Size
+To compare the *total* number of patients on the backlog at the time of each of the three cycles, a  ("C1", "C2" and "C3").
 
-##### Comparing the total number of patients
-
-An alternative method is to compare the *total* number of patients on the backlog at the time of each of the three cycles; this is an effective comparison of the "area under the curve" at each of these time points ("C1", "C2" and "C3").
-
-```{r chi square totals, echo=FALSE, warning=FALSE}
+```{r chisquare , echo=FALSE, warning=FALSE}
 #calculate the totals for each cycle
-# chistats <- dat20 %>% pivot_wider(names_from = "cycle", names_prefix = "C", values_from = patients) 
-# chistotals <- chistats %>% select (C1:C4)  %>% summarise(C1 = sum(C1), C2 = sum(C2), C3 = sum(C3), C4 = sum(C4))
-# 
-# kable(chistotals)
+chistotals <- sepaud %>% select(C1:C5)  %>% summarise(C1 = sum(C1), C2 = sum(C2), C3 = sum(C3), C4 = sum(C4), C5 = sum(C5))
+
+kable(chistotals, "simple", caption = "Table 2 - Sum of patients on backlog at the time of each audit cycle")
 ```
 
 This can be performed with a **Chi-squared** test:
 
 Unpaired test:
 
-```{r unpaired chi, echo=FALSE, warning=FALSE}
+```{r unpairedchi, echo=FALSE, warning=FALSE}
 
 #unpaired test
-# chires_totals <- chisq_test(chistotals)
-# kable(chires_totals)
-# kable(chisq_descriptives(chires_totals))
+chires_totals <- chisq_test(chistotals, rescale.p = TRUE)
+kable(chires_totals, "simple")
+
+kable(chisq_descriptives(chires_totals), "simple")
 ```
 
 Pairwise comparison:
 
-```{r pairwise chi, echo=FALSE, warning=FALSE}
+```{r pairwisechi, echo=FALSE, warning=FALSE}
 #pairwise test
-# chipaires <- pairwise_chisq_gof_test(chistotals)
+# chipaires <- pairwise_chisq_gof_test(chistotal, s)
 # kable(chipaires)
 ```
 
 Therefore there is a statistically significant difference between the number of the patients on the backlog during this period at each of the three time points.
 
 
-#### Distribution
+##### Distribution
 
-##### Comparing the distribution of patients across months
-
-Firstly a **Anderson-Darling k-sample test** (for multiple groups of non-parametric data) on the datasets, comparing the distributions of the patients in each cycle of the audit
+An **Anderson-Darling k-sample test** (for multiple groups of non-parametric data) can be preformed on the data, comparing the distributions of the patients in each cycle of the audit (C1-5):
 
 
 ```{r anderson-douglas, echo =FALSE, warning=FALSE}
 ad.test(sepaud_stats$patients ~ sepaud_stats$cycle, method = "exact", dist = FALSE, Nsim = 1000)
 ```
 
-
 This shows that there is no statistically significant difference between the distribution of the number of patients backlog for the months in the May 20 - May 21 period. 
 
 We can infer from this that the *shape* of the backlog does not change - i.e. there are always more people on it more recently than at the dates furthest back in time.
 
-#### Trend
-
-##### Testing for Trend
+##### Trend
 
 Additionally we can calculate the **Cochran-Armitage test** (a Chi-squared test for linear trends in changing proportions) with the assumption of the same proportion of patients in each month in each cycle:
 
@@ -280,10 +260,18 @@ Then we perform the test:
 
 This shows a highly statistically significant possible linear association between cycle and patients in each month
 
-###  {.unnumbered}
 
+### Remote Management Forms
 
-### Remote Management Data
+1956 RMFs were completed between Sep-21 -Mar-22
+(no data available since then)
+•
+Only 261 patients recorded a previous appointmentdate.
+•
+154/261 (59%) were completed by patients in the"window" of May-20 -May-21, indicating a preferentialuse of RMFs targeting backlog patients.
+•
+Between 2-8% of the total backlog patients weremanaged using RMFs based on available data (Table.
+1.).
 
 Remote management forms collected data from patients who were on the backlog. They took the form of triage questionairres and including the relevant questions to calculate disease severity scores; as well as asking about medications, side effects and other disease factors.
 
@@ -335,7 +323,7 @@ The number of forms which are "incomplete" with respct to our analysis is the nu
 
 This represents more than half the data
 
-### Further analysis {.tabset}
+### Diagnoses and Management {.tabset}
 
 #### Per Diagnosis
 

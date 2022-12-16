@@ -1564,9 +1564,6 @@ backlog, using data from remote management databases and clinic
 appointment outcome forms – including types of consultations, diagnoses
 and follow up/management outcomes, where possible</p></li>
 </ol>
-<div id="section" class="section level3">
-<h3></h3>
-</div>
 </div>
 <div id="methods" class="section level2 tabset tabset-fade tabset-pills">
 <h2 class="tabset tabset-fade tabset-pills">Methods</h2>
@@ -1749,60 +1746,235 @@ patients waiting in each month seen at each cycle.</p>
 Figure 2
 </p>
 </div>
-<div id="statistical-analysis" class="section level3 tabset">
-<h3 class="tabset">Statistical Analysis</h3>
-<ol style="list-style-type: lower-alpha">
-<li><p>There was no statistically significant change in the median
-number and distribution of patients across the 12 month period between
-audit cycles (Wilcoxon Sign Rank test - results not included here),
-implying the “shape” of the backlog remains the same.</p></li>
-<li><p>There was a statistically significant change in the total number
-of patients on the backlog (Chi-square test, p-value = 5.89e-274 ), with
-a statistically significant decrease between each of the four audit
-cycles (results not included here)</p></li>
-<li><p>A Chi-square test for trend (with the assumption of the same
-proportion of patients in each month of the backlog at each time point –
-as supported by our analysis of backlog “shape” (see a., above)),
-supported a statistically significant, linear decrease in the number of
-patients in each month of the backlog period across all four cycles of
-the audit process (p-value = 3e-07).</p></li>
-</ol>
-<p>We demonstrate a 90% reduction in patients awaiting follow-up 3259 to
-326 over 12 months. 71% reduction achieved by 6 months (Fig. 2)</p>
-<p>This reduction was statistically significant andprogressive
-(p&lt;0.001 -Chi-square test for trend). Remote Management Forms</p>
-<p>• 1956 RMFs were completed between Sep-21 -Mar-22 (no data available
-since then) • Only 261 patients recorded a previous appointmentdate. •
-154/261 (59%) were completed by patients in the”window” of May-20
--May-21, indicating a preferentialuse of RMFs targeting backlog
-patients. • Between 2-8% of the total backlog patients weremanaged using
-RMFs based on available data (Table. 1.).</p>
-<p>We can explore whether the change in the number of patients on the
-backlog during this period is statistically significant in a couple of
-different ways.</p>
-<div id="size" class="section level4">
-<h4>Size</h4>
-<div id="comparing-the-total-number-of-patients" class="section level5">
-<h5>Comparing the total number of patients</h5>
-<p>An alternative method is to compare the <em>total</em> number of
-patients on the backlog at the time of each of the three cycles; this is
-an effective comparison of the “area under the curve” at each of these
-time points (“C1”, “C2” and “C3”).</p>
+<div id="analyzing-the-backlog" class="section level3">
+<h3>Analyzing the Backlog</h3>
+<div id="key-points" class="section level4 tabset tabset-fade tabset-pills">
+<h4 class="tabset tabset-fade tabset-pills">Key Points</h4>
+<p>We demonstrate a 90% reduction (3259 -&gt; 326) in the total number
+of patients waiting for follow up on the backlog over a one year period
+of observation.</p>
+<p>There was a statistically significant reduction in the total number
+of patients on the backlog with a statistically significant decrease
+between each of the four audit cycles. 71% of this reduction was
+achieved in 6 months (by March 2022).</p>
+<p>This reduction was statistically significant and linearly progressive
+between audit cycles.</p>
+<p>There was no statistically significant change in the number and
+distribution of patients across the 12 month period between audit
+cycles, implying the “shape” of the backlog remains the same.</p>
+<p>(p&lt;0.001 -Chi-square test for trend). (Chi-square test, p-value =
+5.89e-274 ),</p>
+<p>See the tabs below for more detailed analysis.</p>
+<div id="size" class="section level5">
+<h5>Size</h5>
+<p>To compare the <em>total</em> number of patients on the backlog at
+the time of each of the three cycles, a (“C1”, “C2” and “C3”).</p>
+<table>
+<caption>Table 2 - Sum of patients on backlog at the time of each audit
+cycle</caption>
+<thead>
+<tr class="header">
+<th align="right">C1</th>
+<th align="right">C2</th>
+<th align="right">C3</th>
+<th align="right">C4</th>
+<th align="right">C5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">3259</td>
+<td align="right">2633</td>
+<td align="right">2135</td>
+<td align="right">960</td>
+<td align="right">326</td>
+</tr>
+</tbody>
+</table>
 <p>This can be performed with a <strong>Chi-squared</strong> test:</p>
 <p>Unpaired test:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p
+</th>
+<th style="text-align:right;">
+df
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:left;">
+p.signif
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+9313
+</td>
+<td style="text-align:right;">
+3110.425
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Chi-square test
+</td>
+<td style="text-align:left;">
+****
+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Var1
+</th>
+<th style="text-align:right;">
+observed
+</th>
+<th style="text-align:right;">
+prop
+</th>
+<th style="text-align:right;">
+expected
+</th>
+<th style="text-align:right;">
+resid
+</th>
+<th style="text-align:right;">
+std.resid
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+3259
+</td>
+<td style="text-align:right;">
+0.3499409
+</td>
+<td style="text-align:right;">
+1862.6
+</td>
+<td style="text-align:right;">
+32.355643
+</td>
+<td style="text-align:right;">
+36.174709
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+2633
+</td>
+<td style="text-align:right;">
+0.2827231
+</td>
+<td style="text-align:right;">
+1862.6
+</td>
+<td style="text-align:right;">
+17.850750
+</td>
+<td style="text-align:right;">
+19.957746
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+2135
+</td>
+<td style="text-align:right;">
+0.2292494
+</td>
+<td style="text-align:right;">
+1862.6
+</td>
+<td style="text-align:right;">
+6.311714
+</td>
+<td style="text-align:right;">
+7.056711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:right;">
+960
+</td>
+<td style="text-align:right;">
+0.1030817
+</td>
+<td style="text-align:right;">
+1862.6
+</td>
+<td style="text-align:right;">
+-20.913924
+</td>
+<td style="text-align:right;">
+-23.382478
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:right;">
+326
+</td>
+<td style="text-align:right;">
+0.0350048
+</td>
+<td style="text-align:right;">
+1862.6
+</td>
+<td style="text-align:right;">
+-35.604183
+</td>
+<td style="text-align:right;">
+-39.806687
+</td>
+</tr>
+</tbody>
+</table>
 <p>Pairwise comparison:</p>
 <p>Therefore there is a statistically significant difference between the
 number of the patients on the backlog during this period at each of the
 three time points.</p>
 </div>
-</div>
-<div id="distribution" class="section level4">
-<h4>Distribution</h4>
-<div id="comparing-the-distribution-of-patients-across-months" class="section level5">
-<h5>Comparing the distribution of patients across months</h5>
-<p>Firstly a <strong>Anderson-Darling k-sample test</strong> (for
-multiple groups of non-parametric data) on the datasets, comparing the
-distributions of the patients in each cycle of the audit</p>
+<div id="distribution" class="section level5">
+<h5>Distribution</h5>
+<p>An <strong>Anderson-Darling k-sample test</strong> (for multiple
+groups of non-parametric data) can be preformed on the data, comparing
+the distributions of the patients in each cycle of the audit (C1-5):</p>
 <pre><code>## 
 ## 
 ##  Anderson-Darling k-sample test.
@@ -1830,11 +2002,8 @@ months in the May 20 - May 21 period.</p>
 not change - i.e. there are always more people on it more recently than
 at the dates furthest back in time.</p>
 </div>
-</div>
-<div id="trend" class="section level4">
-<h4>Trend</h4>
-<div id="testing-for-trend" class="section level5">
-<h5>Testing for Trend</h5>
+<div id="trend" class="section level5">
+<h5>Trend</h5>
 <p>Additionally we can calculate the <strong>Cochran-Armitage
 test</strong> (a Chi-squared test for linear trends in changing
 proportions) with the assumption of the same proportion of patients in
@@ -1846,11 +2015,14 @@ association between cycle and patients in each month</p>
 </div>
 </div>
 </div>
-<div id="section-1" class="section level3 unnumbered">
-<h3 class="unnumbered"></h3>
-</div>
-<div id="remote-management-data" class="section level3">
-<h3>Remote Management Data</h3>
+<div id="remote-management-forms" class="section level3">
+<h3>Remote Management Forms</h3>
+<p>1956 RMFs were completed between Sep-21 -Mar-22 (no data available
+since then) • Only 261 patients recorded a previous appointmentdate. •
+154/261 (59%) were completed by patients in the”window” of May-20
+-May-21, indicating a preferentialuse of RMFs targeting backlog
+patients. • Between 2-8% of the total backlog patients weremanaged using
+RMFs based on available data (Table. 1.).</p>
 <p>Remote management forms collected data from patients who were on the
 backlog. They took the form of triage questionairres and including the
 relevant questions to calculate disease severity scores; as well as
@@ -1880,8 +2052,8 @@ analysis is the number for which the patient’s previous appointment date
 is not known. This number is:</p>
 <p>This represents more than half the data</p>
 </div>
-<div id="further-analysis" class="section level3 tabset">
-<h3 class="tabset">Further analysis</h3>
+<div id="diagnoses-and-management" class="section level3 tabset">
+<h3 class="tabset">Diagnoses and Management</h3>
 <div id="per-diagnosis" class="section level4">
 <h4>Per Diagnosis</h4>
 <p>The number of forms reviewed per diagnostic group - total</p>
@@ -1896,7 +2068,7 @@ the backlog by the remote management forms by analysing data in quarters
 (i.e. grouping patients by the three month window in which their remote
 management data was reviewed)</p>
 </div>
-<div id="section-2" class="section level4 unnumbered">
+<div id="section" class="section level4 unnumbered">
 <h4 class="unnumbered"></h4>
 </div>
 </div>
