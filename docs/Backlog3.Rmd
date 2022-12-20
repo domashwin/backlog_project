@@ -36,6 +36,8 @@ library(formattable)
 library(janitor)
 library(extrafont)
 library(kSamples)
+library(here)
+library(moments)
 ```
 
 ## Background and Aims
@@ -105,11 +107,11 @@ Data analysis performed in Microsoft Excel and R (version 4.2.1).
 
 # DATA IMPORT ----
 # backlog audit data up to Sep 22 (Cycle 5)
-september_22_backlog_audit <- read_csv("/Users/dominikkurzeja/Docs/07. Medicine/Clinical Work/IMT OUH/Rheum QIPs/Backlog QIP/data/september 22 backlog audit.csv")
+september_22_backlog_audit <- read_csv(here("data/september 22 backlog audit.csv"))
 sepaud <- september_22_backlog_audit 
 
 # forms
-forms <- read_csv("/Users/dominikkurzeja/Docs/07. Medicine/Clinical Work/IMT OUH/Rheum QIPs/Backlog QIP/data/forms_backlog.csv")
+forms <- read_csv(here("data/forms_backlog.csv"))
 
 # wrangling 
 # pivot longer to make a stats table
@@ -207,8 +209,8 @@ Pairwise comparison:
 
 ```{r pairwisechi, echo=FALSE, warning=FALSE}
 #pairwise test
-# chipaires <- pairwise_chisq_gof_test(chistotal, s)
-# kable(chipaires)
+chipaires <- pairwise_chisq_gof_test(chistotals)
+kable(chipaires, "simple")
 ```
 
 Therefore there is a statistically significant difference between the number of the patients on the backlog during this period at each of the three time points.
@@ -216,6 +218,23 @@ Therefore there is a statistically significant difference between the number of 
 
 ##### Distribution
 
+###### Skewness
+
+Measuring how the data skews between cycles.
+
+```{r skew, echo = FALSE, warning = FALSE}
+
+# skewness from moments lib
+sepaud_stats %>% nest(patients) %>% mutate(skew = map_dbl(data, ~skewness(.))) %>% kable("simple")
+
+
+```
+
+
+All have a positive skew which increases throughout - indicating that patients are being preferentially removed from earlier in the backlog. 
+
+
+###### AD test
 An **Anderson-Darling k-sample test** (for multiple groups of non-parametric data) can be preformed on the data, comparing the distributions of the patients in each cycle of the audit (C1-5):
 
 
@@ -223,7 +242,7 @@ An **Anderson-Darling k-sample test** (for multiple groups of non-parametric dat
 ad.test(sepaud_stats$patients ~ sepaud_stats$cycle, method = "exact", dist = FALSE, Nsim = 1000)
 ```
 
-This shows that there is no statistically significant difference between the distribution of the number of patients backlog for the months in the May 20 - May 21 period. 
+This shows that there is no statistically significant difference between the distribution of the number of patients backlog for the months in the May 20 - May 21 period (p. 
 
 We can infer from this that the *shape* of the backlog does not change - i.e. there are always more people on it more recently than at the dates furthest back in time.
 
@@ -235,7 +254,7 @@ First construct a table:
 
 ```{r cochran table, echo = FALSE}
 
-#creating a better summary table using unite to create a 'monyear' column
+creating a better summary table using unite to create a 'monyear' column
 #  datsummary <- chistats %>% unite(monyear, mon, year, sep = " ", remove = TRUE) %>% mutate(audit_month = row_number()) %>% select(!month)
 #  
 #  datsummary <- set_variable_labels(datsummary, monyear = "Month")
