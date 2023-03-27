@@ -2033,15 +2033,11 @@ three time points.</p>
 <td align="left">0, 2, 16, 11, 6, 3, 34, 7, 11, 15, 49, 73, 99</td>
 <td align="right">1.4028367</td>
 </tr>
-<tr class="even">
-<td align="left">All have</td>
-<td align="left">a positive skew which increases throughout - indicating
-that</td>
-<td align="right">patients are being preferentially removed from earlier
-in the backlog.</td>
-</tr>
 </tbody>
 </table>
+<p>All have a positive skew which increases throughout - indicating that
+patients are being preferentially removed from earlier in the
+backlog.</p>
 </div>
 <div id="ad-test" class="section level6">
 <h6>AD test</h6>
@@ -2070,7 +2066,7 @@ the distributions of the patients in each cycle of the audit (C1-5):</p>
 ## version 2: 15.60 8.021        1.027e-05             0</code></pre>
 <p>This shows that there is no statistically significant difference
 between the distribution of the number of patients backlog for the
-months in the May 20 - May 21 period (p. </p>
+months in the May 20 - May 21 period (p.</p>
 <p>We can infer from this that the <em>shape</em> of the backlog does
 not change - i.e. there are always more people on it more recently than
 at the dates furthest back in time.</p>
@@ -2112,14 +2108,6 @@ following diagnostic groups:</p>
 </ul>
 <p>The data collected from these forms is summarised below, with a
 particular focus on how patients from the backlog were dealt with.</p>
-<p>```{# {r remote management data, include = FALSE, echo = FALSE,
-warning = FALSE} # # #data import # rmd &lt;-
-read_csv(“data/remote_management_data.csv”) # rmd<span class="math inline">\(visit &lt;- parse_date(rmd\)</span>visit,
-“%d/%m/%Y”) # rmd<span class="math inline">\(prev_appt &lt;-
-parse_date(rmd\)</span>prev_appt, “%d/%m/%Y”) # # #making the vasculitis
-type key # vasctype &lt;- tibble(code = c(1,2,3,4), type = c(“small”,
-“medium”, “large”, “other”)) # #making the clinic types</p>
-<p>```</p>
 <p>The total number of forms is:</p>
 <p>The number of forms which are “incomplete” with respct to our
 analysis is the number for which the patient’s previous appointment date

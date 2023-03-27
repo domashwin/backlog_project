@@ -68,7 +68,6 @@ As part of the aims of this project
 
 2.  **Secondary:** To understand the nature of the consultations that have contributed to dealing with patients on the backlog, using data from remote management databases and clinic appointment outcome forms -- including types of consultations, diagnoses and follow up/management outcomes, where possible
 
-
 ## Methods {.tabset .tabset-fade .tabset-pills}
 
 ### Sample Selection
@@ -83,7 +82,7 @@ This was 3259 patients out of the total backlog of 6812.
 
 We revisited the number of patients remaining from that cohort (without a change in status date) on four occasions between September2021 and September 2022: at baseline, then at 1-, 2-, 6-and 12-month intervals (Fig. 1)
 
-![Figure 1. Audit Methodology](/Users/dominikkurzeja/Docs/07. Medicine/Clinical Work/IMT OUH/Rheum QIPs/Backlog QIP/docs/images/schema3 landscape.png)
+![Figure 1. Audit Methodology](/Users/dominikkurzeja/Docs/07.%20Medicine/Clinical%20Work/IMT%20OUH/Rheum%20QIPs/Backlog%20QIP/docs/images/schema3%20landscape.png)
 
 ### Consultation Data & Remote Management Forms
 
@@ -132,7 +131,6 @@ table1 <- sepaud %>% rename("Date of last encounter" = "yearmon")
 kable(table1, caption = "Table 1", "simple")
 ```
 
-
 Figure 2 is a graphical representation of this reduction:
 
 ```{r col_graph, echo=FALSE, warning=FALSE, fig.cap= "Figure 2"}
@@ -164,26 +162,25 @@ sep_plot
 
 ```
 
-### Analyzing the Backlog 
+### Analyzing the Backlog
 
 #### Key Points {.tabset .tabset-fade .tabset-pills}
 
-We demonstrate a 90% reduction (3259 -> 326) in the total number of patients waiting for follow up on the backlog over a one year period of observation. 
+We demonstrate a 90% reduction (3259 -\> 326) in the total number of patients waiting for follow up on the backlog over a one year period of observation.
 
-There was a statistically significant reduction in the total number of patients on the backlog with a statistically significant decrease between each of the four audit cycles. 71% of this reduction was achieved in 6 months (by March 2022). 
+There was a statistically significant reduction in the total number of patients on the backlog with a statistically significant decrease between each of the four audit cycles. 71% of this reduction was achieved in 6 months (by March 2022).
 
 This reduction was statistically significant and linearly progressive between audit cycles.
 
-There was no statistically significant change in the number and distribution of patients across the 12 month period between audit cycles, implying the "shape" of the backlog remains the same. 
+There was no statistically significant change in the number and distribution of patients across the 12 month period between audit cycles, implying the "shape" of the backlog remains the same.
 
-(p\<0.001 -Chi-square test for trend).
-(Chi-square test, p-value = 5.89e-274 ), 
+(p\<0.001 -Chi-square test for trend). (Chi-square test, p-value = 5.89e-274 ),
 
 See the tabs below for more detailed analysis.
 
-##### Size 
+##### Size
 
-To compare the *total* number of patients on the backlog at the time of each of the three cycles, a  ("C1", "C2" and "C3").
+To compare the *total* number of patients on the backlog at the time of each of the three cycles, a ("C1", "C2" and "C3").
 
 ```{r chisquare , echo=FALSE, warning=FALSE}
 #calculate the totals for each cycle
@@ -215,7 +212,6 @@ kable(chipaires, "simple")
 
 Therefore there is a statistically significant difference between the number of the patients on the backlog during this period at each of the three time points.
 
-
 ##### Distribution
 
 ###### Skewness
@@ -230,19 +226,17 @@ sepaud_stats %>% nest(patients) %>% mutate(skew = map_dbl(data, ~skewness(.))) %
 
 ```
 
-
-All have a positive skew which increases throughout - indicating that patients are being preferentially removed from earlier in the backlog. 
-
+All have a positive skew which increases throughout - indicating that patients are being preferentially removed from earlier in the backlog.
 
 ###### AD test
-An **Anderson-Darling k-sample test** (for multiple groups of non-parametric data) can be preformed on the data, comparing the distributions of the patients in each cycle of the audit (C1-5):
 
+An **Anderson-Darling k-sample test** (for multiple groups of non-parametric data) can be preformed on the data, comparing the distributions of the patients in each cycle of the audit (C1-5):
 
 ```{r anderson-douglas, echo =FALSE, warning=FALSE}
 ad.test(sepaud_stats$patients ~ sepaud_stats$cycle, method = "exact", dist = FALSE, Nsim = 1000)
 ```
 
-This shows that there is no statistically significant difference between the distribution of the number of patients backlog for the months in the May 20 - May 21 period (p. 
+This shows that there is no statistically significant difference between the distribution of the number of patients backlog for the months in the May 20 - May 21 period (p.
 
 We can infer from this that the *shape* of the backlog does not change - i.e. there are always more people on it more recently than at the dates furthest back in time.
 
@@ -254,11 +248,11 @@ First construct a table:
 
 ```{r cochran table, echo = FALSE}
 
-creating a better summary table using unite to create a 'monyear' column
+#creating a better summary table using unite to create a 'monyear' column
 #  datsummary <- chistats %>% unite(monyear, mon, year, sep = " ", remove = TRUE) %>% mutate(audit_month = row_number()) %>% select(!month)
-#  
+# 
 #  datsummary <- set_variable_labels(datsummary, monyear = "Month")
-#  
+# 
 # trendaudit <- rbind(c(datsummary$C1), c(datsummary$C2), c(datsummary$C3), c(datsummary$C4))
 # 
 # dimnames(trendaudit) <- list(
@@ -279,18 +273,9 @@ Then we perform the test:
 
 This shows a highly statistically significant possible linear association between cycle and patients in each month
 
-
 ### Remote Management Forms
 
-1956 RMFs were completed between Sep-21 -Mar-22
-(no data available since then)
-•
-Only 261 patients recorded a previous appointmentdate.
-•
-154/261 (59%) were completed by patients in the"window" of May-20 -May-21, indicating a preferentialuse of RMFs targeting backlog patients.
-•
-Between 2-8% of the total backlog patients weremanaged using RMFs based on available data (Table.
-1.).
+1956 RMFs were completed between Sep-21 -Mar-22 (no data available since then) • Only 261 patients recorded a previous appointmentdate. • 154/261 (59%) were completed by patients in the"window" of May-20 -May-21, indicating a preferentialuse of RMFs targeting backlog patients. • Between 2-8% of the total backlog patients weremanaged using RMFs based on available data (Table. 1.).
 
 Remote management forms collected data from patients who were on the backlog. They took the form of triage questionairres and including the relevant questions to calculate disease severity scores; as well as asking about medications, side effects and other disease factors.
 
@@ -308,7 +293,7 @@ There were seperate remote managemnt forms created for each of the following dia
 
 The data collected from these forms is summarised below, with a particular focus on how patients from the backlog were dealt with.
 
-```{# {r remote management data, include = FALSE, echo = FALSE, warning = FALSE}
+```{r remote management data, include = FALSE, echo = FALSE, warning = FALSE}
 # 
 # #data import
 # rmd <- read_csv("data/remote_management_data.csv")
@@ -412,20 +397,14 @@ We were able to further analyse how patients were being cleared from the backlog
 
 ####  {.unnumbered}
 
-
 ## Conclusions + Discussion
 
+Our outpatient backlog has been significantly reduced over a12-month period.
 
-Our outpatient backlog has been significantly reduced over a12-month period. 
+Remote management made a sizeable contribution to this reduction, meaning some of this reduction was achievedwithout face-to-face encounters; these results underestimatethe effect of RMFs due to this dataset being incomplete
 
-Remote management made a sizeable contribution to this 
-reduction, meaning some of this reduction was achievedwithout face-to-face encounters; these results underestimatethe effect of RMFs due to this dataset being incomplete 
+1956 RMFs completed in a 6-month period shows robustintegration of our RMFs into outpatient services disrupted by COVID-19 and provides evidence for remote managementas a useful tool in outpatient management, with relevance toareas such as Patient Initiatedfollow-up pathways.
 
-1956 RMFs completed in a 6-month period shows robustintegration of our RMFs into outpatient services disrupted by 
-COVID-19 and provides evidence for remote managementas a useful tool in outpatient management, with relevance toareas such as Patient Initiatedfollow-up pathways. 
-
-Further work is needed to clarify where remote managementis best deployed and which patient groups benefit most fromthis. 
-
+Further work is needed to clarify where remote managementis best deployed and which patient groups benefit most fromthis.
 
 ## References
-
