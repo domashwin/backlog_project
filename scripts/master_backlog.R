@@ -78,6 +78,8 @@ p2 <- ggbarplot(sepaud2, "yearmon", "patients",
 ) + theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1))+ labs(y = "Patients", x = "Month", fill = "Audit Cycle", color = NULL)
 p2 <- ggpar(p2, legend = "bottom",legend.title = NULL, font.family = "sans")
 p2
+p2+ font("xlab", size = 20) + font("ylab", size = 20) + font("xy.text", size = 20) + font("legend.title", size = 20) + font("legend.text", size = 20)
+
 ggsave("figures/september22/alt_backlog_cols_sep22.png", p2)
 
 
