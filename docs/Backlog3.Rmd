@@ -334,8 +334,8 @@ vasctype <- tibble(code = c(1,2,3,4), type = c("small", "medium", "large", "othe
 The number of forms reviewed per diagnostic group
 
 ```{r echo = FALSE, warning = FALSE}
-diagnosis_tab <- rmd %>% group_by(clinic) %>% summarise(count = n()) %>% 
-  transmute("Diagnosis" = clinic, "Patients reviewed by RMF (total)" = count) %>%
+diagnosis_tab <- rmd %>% group_by(clinic) %>% summarise(count = n()) %>% mutate("Diagnosis" = c("Ankylosing Spondylitis", "Psoriatic Arthritis", "Rheumatoid Arthritis", "SLE", "Vasculitis")) %>% select(c("Diagnosis", "count")) %>% 
+  rename("Patients reviewed by RMF (total)" = count)  %>% 
   kbl() %>% kable_styling()
 diagnosis_tab
 
